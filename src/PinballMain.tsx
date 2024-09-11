@@ -1,4 +1,6 @@
 import './PinballMain.css';
+import ShowDeviceMenu from './components/ShowDeviceMenu';
+
 
 function PinballMain() {
 
@@ -6,15 +8,16 @@ function PinballMain() {
         <div className='background'>
             <div className='app-workspace-background'>
 
-            
-            Test
+            <ShowDeviceMenu />
+
+            {/* Test
             <br></br>
             <br></br>
             <br></br>
             <br></br>
             <br></br>
             <br></br>
-             
+             */} 
 
             </div>            
         </div>
