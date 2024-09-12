@@ -1,18 +1,25 @@
 import './ShowDeviceMenu.css';
+import ShowDeviceMenuItem from './ShowDeviceMenuItem';
 
 function ShowDeviceMenu () {
     return(
 
         <div className="device-list-container">
-            <button className='device-button-container'>
-                <div className='device-name-item'>Star Wars(Pena)</div>
+
+            <ShowDeviceMenuItem deviceName='Star Wars(Pena)' 
+                onClick={ () => console.log('Button clicked!')}>
+                <div>jlfasjlfsjfslkda</div> 
                 <div>jlfasjlfsjfslkda</div>
                 <div>jlfasjlfsjfslkda</div>
+            </ShowDeviceMenuItem>
+
+            <ShowDeviceMenuItem deviceName='Star Wars(Mika)' 
+                onClick={ () => console.log('Button clicked!')}>
+                <div>jlfasjlfsjfslkda</div> 
                 <div>jlfasjlfsjfslkda</div>
-            </button>
-            <button className='device-button-container'>
-                <div className='device-name-item'>Star Wars(Make)</div>
-            </button>
+                <div>jlfasjlfsjfslkda</div>
+            </ShowDeviceMenuItem>
+
         </div>
     );
 }

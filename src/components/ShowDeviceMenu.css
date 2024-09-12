@@ -5,18 +5,3 @@
     row-gap: 20px;
     justify-content: center;
 }
-
-.device-button-container {
-    gap: 5px;
-    display: flex;
-    flex-wrap: wrap;
-    border-radius: 10px;
-    border-color: black;
-    border-width: 3px;
-    border-style: solid;
-    /* margin: 20px; */
-}
-
-.device-name-item {
-    font-weight: bold;
-}
