@@ -1,6 +1,20 @@
 import './PinballMain.css';
 import ShowDeviceMenu from './components/ShowDeviceMenu';
 
+type Device = {
+    deviceId: number,
+    name:string    
+};
+
+type AppState = {
+
+    isError:boolean,
+    errorMessage: string,
+    fetchDeviceListData:boolean,
+    deviceListFetchCommenced:boolean,
+    deviceListData:[Device]
+
+};
 
 function PinballMain() {
 
@@ -9,16 +23,7 @@ function PinballMain() {
             <div className='app-workspace-background'>
 
             <ShowDeviceMenu />
-
-            {/* Test
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-             */} 
-
+            
             </div>            
         </div>
     );
