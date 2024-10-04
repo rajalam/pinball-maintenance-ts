@@ -9,9 +9,9 @@ type Device = {
     name:string;
 };
 
-type GetDeviceListResponse = {
-    devices: Device[];
-}
+//type GetDeviceListResponse = {
+//    devices: Device[];
+//}
 
 type AppState = {
 
@@ -113,15 +113,17 @@ function PinballMain() {
                 })
 
                 const fetchResult = 
-                    await axios.get<GetDeviceListResponse>(getServer() + '/devices');
+                    await axios.get<Device[]>(getServer() + '/devices');
                 //    await axios.get<GetDeviceListResponse>(getServer() + '/devices', getTokendata());
                 
+                //console.log('fetchResult: ', fetchResult);
+
                 if (fetchResult.status === 200 ) { //fetch ok
                     
                         dispatch({
                             type: 'DEVICE_LIST_FETCH_OK',
                             payload: {
-                                deviceListData: fetchResult.data.devices
+                                deviceListData: fetchResult.data
                             }
                             
                         })
