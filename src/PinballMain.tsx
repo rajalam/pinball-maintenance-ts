@@ -3,15 +3,22 @@ import ShowDeviceMenu from './components/ShowDeviceMenu';
 import { useReducer, useEffect } from 'react';
 import axios, { AxiosResponse } from 'axios'; // npm install axios , jos ei ole jo ladattu
 import { getServer, getTokendata } from './utils/ServerConfig';
+import {Action} from './models/actions';
 
-type Device = {
-    deviceId: number;
+export type Device = {
+    readonly deviceId: number;
     name:string;
 };
 
 //type GetDeviceListResponse = {
 //    devices: Device[];
 //}
+
+export interface ErrorContainer { //e.g. { email: 'Not a valid email!'}
+    [prop: string]: string;
+}
+
+
 
 type AppState = {
 
@@ -34,30 +41,7 @@ const initAppState:AppState = {
 
 function PinballMain() {
     
-    type StartDeviceListFetchAction = {
-        type: 'START_DEVICE_LIST_FETCH';
-    };
-
-    type DeviceListFetchSuccessfulAction = {
-        type: 'DEVICE_LIST_FETCH_OK';
-        payload: {
-            deviceListData: Device[];
-        }
-    };
-
-    const ERROR_MESSAGE_DEVICE_LIST_FETCH_FAILED:string = 
-        "Laitteiden haku epäonnistui!";
-
-    type ErrorAction = {
-        type: 'ERROR_ACTION';
-        payload: {
-            errorMessage: string;
-            deviceListFetchCommenced: boolean;
-        }
-    };
-      
-    type Action = StartDeviceListFetchAction | DeviceListFetchSuccessfulAction | ErrorAction;
-
+    
     //reducer alustus
     const [appState, dispatch] = useReducer(appReducer, initAppState);
 
@@ -89,6 +73,12 @@ function PinballMain() {
                     errorMessage: action.payload.errorMessage,
                     deviceListFetchCommenced: false
                 }
+            case 'DEVICE_SELECTED_OK_ACTION':
+                console.log("DEVICE_SELECTED_OK_ACTION", action)
+                return {
+                    ...state
+                    //TODO
+                }
         }
 
 
@@ -106,8 +96,12 @@ function PinballMain() {
         //fetch all devices
         const fetchDeviceList = async () => {
 
-            try {
+            const errorBag:ErrorContainer = {
+                ERROR_MESSAGE_DEVICE_LIST_FETCH_FAILED: "Laitteiden haku epäonnistui!"
+            };
 
+            try {
+                
                 dispatch({
                     type: 'START_DEVICE_LIST_FETCH'   
                 })
@@ -116,8 +110,6 @@ function PinballMain() {
                     await axios.get<Device[]>(getServer() + '/devices');
                 //    await axios.get<GetDeviceListResponse>(getServer() + '/devices', getTokendata());
                 
-                //console.log('fetchResult: ', fetchResult);
-
                 if (fetchResult.status === 200 ) { //fetch ok
                     
                         dispatch({
@@ -140,7 +132,7 @@ function PinballMain() {
                     type: 'ERROR_ACTION',
                     payload:
                     {                        
-                        errorMessage: ERROR_MESSAGE_DEVICE_LIST_FETCH_FAILED,
+                        errorMessage: errorBag.ERROR_MESSAGE_DEVICE_LIST_FETCH_FAILED,
                         deviceListFetchCommenced: false
                     }
                 })
@@ -155,7 +147,9 @@ function PinballMain() {
         <div className='background'>
             <div className='app-workspace-background'>
 
-            <ShowDeviceMenu />
+            <ShowDeviceMenu deviceList={appState.deviceListData}
+                dispatch={dispatch}
+                  />
             
             </div>            
         </div>
