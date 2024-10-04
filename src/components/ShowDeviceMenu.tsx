@@ -2,7 +2,7 @@ import React, { Dispatch } from 'react';
 import './ShowDeviceMenu.css';
 import ShowDeviceMenuItem from './ShowDeviceMenuItem';
 import { Device, ErrorContainer } from '../PinballMain';
-import {DeviceSelectedSuccessfulAction} from '../models/actions'
+import {DeviceSelectedSuccessfulAction} from '../action/actions'
 
 interface DeviceListProps{
     deviceList: Device[];

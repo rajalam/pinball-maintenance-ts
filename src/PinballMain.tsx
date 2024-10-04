@@ -1,9 +1,10 @@
 import './PinballMain.css';
 import ShowDeviceMenu from './components/ShowDeviceMenu';
 import { useReducer, useEffect } from 'react';
-import axios, { AxiosResponse } from 'axios'; // npm install axios , jos ei ole jo ladattu
+import axios from 'axios'; // npm install axios , jos ei ole jo ladattu
 import { getServer, getTokendata } from './utils/ServerConfig';
-import {Action} from './models/actions';
+// import {Action} from './action/actions';
+import appReducer from './reducers/appReducer';
 
 export type Device = {
     readonly deviceId: number;
@@ -20,7 +21,7 @@ export interface ErrorContainer { //e.g. { email: 'Not a valid email!'}
 
 
 
-type AppState = {
+export type AppState = {
 
     isError:boolean;
     errorMessage:string;
@@ -45,51 +46,7 @@ function PinballMain() {
     //reducer alustus
     const [appState, dispatch] = useReducer(appReducer, initAppState);
 
-    function appReducer(state: AppState, action: Action ): AppState {
-        
-        switch( action.type ) {
-           case 'START_DEVICE_LIST_FETCH':
-                console.log("START_DEVICE_LIST_FETCH", action)
-                return {
-                    ...state, 
-                    deviceListFetchCommenced: true
-                }
-            
-            case 'DEVICE_LIST_FETCH_OK':
-                console.log("DEVICE_LIST_FETCH_OK", action)
-                return {
-                    ...state,
-                    deviceListFetchCommenced: false,
-                    deviceListData: [...action.payload.deviceListData],
-                    fetchDeviceListData: false,
-                    isError: false,
-                    errorMessage: ''
-                }
-            case 'ERROR_ACTION':
-                console.log("ERROR_ACTION", action)
-                return {
-                    ...state,
-                    isError: true,
-                    errorMessage: action.payload.errorMessage,
-                    deviceListFetchCommenced: false
-                }
-            case 'DEVICE_SELECTED_OK_ACTION':
-                console.log("DEVICE_SELECTED_OK_ACTION", action)
-                return {
-                    ...state
-                    //TODO
-                }
-        }
-
-
-        
-        
-
-        
-            
-
-        // return state;
-    }
+    
 
     useEffect(() => {
 
